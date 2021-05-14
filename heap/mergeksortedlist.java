@@ -20,14 +20,14 @@ public static ArrayList<Integer> mergeKSortedLists(ArrayList<ArrayList<Integer>>
    ArrayList<Integer> rv = new ArrayList<>();
 
    PriorityQueue<Pair> pq = new PriorityQueue<>();
-   
+   //travel on k lists here k =2
    for(int idx = 0 ; idx < lists.size() ; idx++){
        pq.add(new Pair(idx,0,lists.get(idx).get(0)));
    }
    
    while(pq.size() > 0){
        Pair minPair = pq.remove();
-       
+       // get smallest element in minpair of type pair
        rv.add(minPair.val);
        
        if(minPair.di+1 < lists.get(minPair.li).size()){
