@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+//di = data index , bi = bucket index
 public class HashmapImplementation {
 
   public static class HashMap<K, V> {
@@ -45,9 +45,9 @@ public class HashmapImplementation {
            node.value = value;
        }
        
-       double lambda = (size*1.0)/buckets.length;
+       double lambda = (size*1.0)/buckets.length; //implement decimal
        
-       if(lambda > 2.0){
+       if(lambda > 2.0){ // set a threshold and complexity depend on O(lambda)
            rehash();
        }
     }
