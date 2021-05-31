@@ -14,7 +14,7 @@ public class  creation  {
     int size;
 
     void addLast(int val) {
-      Node temp = new Node();
+      Node temp = new Node(); /** CREATE NEW NODE**/
       temp.data = val;
       temp.next = null;
 
