@@ -24,7 +24,7 @@ public class coinchangepermutation {
                 dp[t] = 1;
             } else {
                 for (int coin : coins) {
-                    if (y >= coin) {
+                    if (t >= coin) {
                         dp[t] += dp[t - coin];
                     }
                 }
