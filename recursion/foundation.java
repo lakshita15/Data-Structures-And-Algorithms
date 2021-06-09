@@ -54,7 +54,7 @@ public class foundation{
             return 1;
         int smallAns = powerBtr(a, b / 2);
         smallAns *= smallAns;
-        return b % 2 != 0 ? smallAns * a : smallAns;
+        return b % 2 != 0 ? smallAns * a : smallAns; // in case the power is odd just multiply with an "a"
     }
 
     public static void display(int[] arr, int idx) {
