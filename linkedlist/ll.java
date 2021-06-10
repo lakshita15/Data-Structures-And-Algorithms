@@ -288,7 +288,7 @@ public class ll {
         int val = this.getFirst();
         this.removeFirst();
 
-        if (res.size() == 0 || val != res.tail.data) {
+        if (res.size() == 0 || val != res.tail.data) {         // 2 3  5 
           res.addLast(val);
         }
       }

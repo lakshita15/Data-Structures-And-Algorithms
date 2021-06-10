@@ -1,43 +1,50 @@
 
 import java.util.Scanner;
 import java.util.ArrayList;
-public class foundation{
 
-    public static Scanner scn=new Scanner(System.in);
+public class foundation {
 
-    public static void printDec(int a, int b){
-    if (a == b + 1)
-        return;
-     printDec(a+1,b);
-     System.out.print(a + " ");
-    }
-    public static void printinc(int a, int b){
+    public static Scanner scn = new Scanner(System.in);
+
+    public static void printDec(int a, int b) {
         if (a == b + 1)
             return;
-            System.out.print(a + " ");
-            printinc(a+1,b);
-        }
-        public static void printincDec(int a, int b){
-            if (a == b + 1)
-                return;
-                
-                System.out.print(a + " ");
-                printincDec(a+1,b);
-                System.out.print(a + " ");
-            }
-    public static void printEvenOdd(int a, int b){
-        if (a >b  )
+        printDec(a + 1, b);
+        System.out.print(a + " ");
+    }
+
+    public static void printinc(int a, int b) {
+        if (a == b + 1)
             return;
-        if(a%2==0) System.out.println(a);
-        printEvenOdd(a+1,b);
-        if(a%2!=0) System.out.println(a);
+        System.out.print(a + " ");
+        printinc(a + 1, b);
     }
-    public static int factorial(int a){
-       
-         return  a == 0 ? 1 : factorial(a-1) * a;
-       
-       
+
+    public static void printincDec(int a, int b) {
+        if (a == b + 1)
+            return;
+
+        System.out.print(a + " ");
+        printincDec(a + 1, b);
+        System.out.print(a + " ");
     }
+
+    public static void printEvenOdd(int a, int b) {
+        if (a > b)
+            return;
+        if (a % 2 == 0)
+            System.out.println(a);
+        printEvenOdd(a + 1, b);
+        if (a % 2 != 0)
+            System.out.println(a);
+    }
+
+    public static int factorial(int a) {
+
+        return a == 0 ? 1 : factorial(a - 1) * a;
+
+    }
+
     public static int power(int a, int b) {
         return b == 0 ? 1 : power(a, b - 1) * a;
     }
@@ -61,7 +68,7 @@ public class foundation{
         if (idx == arr.length)
             return;
 
-        System.out.println(arr[idx]);
+        System.out.print(arr[idx] + " ");
         display(arr, idx + 1);
     }
 
@@ -70,7 +77,7 @@ public class foundation{
             return;
 
         displayReverse(arr, idx + 1);
-        System.out.println(arr[idx]);
+        System.out.print(arr[idx] + " ");
     }
 
     public static int maximum(int[] arr, int idx) {
@@ -78,6 +85,15 @@ public class foundation{
             return (int) -1e9;
         int maxSF = maximum(arr, idx + 1);
         return Math.max(maxSF, arr[idx]);
+
+        // if(idx == arr.length)
+        //     return (int)-1e9;
+        
+        // int msf = maximum(arr , idx+1);
+        // if(msf < arr[idx]){
+        //     return arr[idx];
+        // }
+        // return msf;
 
     }
 
@@ -120,6 +136,7 @@ public class foundation{
         if (idx == arr.length) {
             int[] base = new int[count];
             return base;
+            
         }
 
         if (arr[idx] == data)
@@ -142,29 +159,38 @@ public class foundation{
         ArrayList<String> myAns = new ArrayList<>(recAns);
         for (String s : recAns)
             myAns.add(str.charAt(idx) + s);
-        
+
         return myAns;
     }
+    
+    // public static ArrayList<String> getKPC(String str) {
+
+    // }
 
 
-        public static void main(String[] args){
-            int a = scn.nextInt();
-            int b = scn.nextInt();
-            // printDec(a , b);
-            // printincDec(a, b);
-            // printinc(a, b);
-            // printEvenOdd(a, b);
-            // System.out.println(factorial(a));
-           
-            int n =scn.nextInt();
-            int[] arr = new int[n];
-      
-            for (int i = 0; i < n; i++) {
-               arr[i] = scn.nextInt();
-            }
-      
-            int max = maximumEle(arr, 0);
-            System.out.println(max);
+    public static void main(String[] args) {
+        // int a = scn.nextInt();
+        // int b = scn.nextInt();
+        // printDec(a , b);
+        // printincDec(a, b);
+        // printinc(a, b);
+        // printEvenOdd(a, b);
+        // System.out.println(factorial(a));
+
+
+                                    // input an array
+        // int n = scn.nextInt();
+        // int[] arr = new int[n];
+
+        // for (int i = 0; i < n; i++) {
+        //     arr[i] = scn.nextInt();
+        // }
+        // display(arr, 0);
+        // displayReverse(arr, 0);
+        // int max = maximum(arr, 0);
+        // System.out.println(max);
+        // System.out.println(find(arr, 0, 7));
+
     }
 
 }
