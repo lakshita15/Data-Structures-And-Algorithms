@@ -1,6 +1,5 @@
-
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 public class foundation {
 
@@ -166,6 +165,7 @@ public class foundation {
     // public static ArrayList<String> getKPC(String str) {
 
     // }
+    // top to bottom
     public static ArrayList<String> mazepath_HVD(int sr, int sc, int er, int ec) {
 
         if (sr == er && sc == ec) {
@@ -210,6 +210,7 @@ public class foundation {
 
     }
 
+    // bottom to top
     public static void printMazePaths(int sr, int sc, int dr, int dc, String psf) {
         if (sr == dr && sc == dc) {
             System.out.println(psf);
@@ -229,6 +230,7 @@ public class foundation {
         }
     }
 
+    // give count of limited jumps
     public static int mazepath_HVD(int sr, int sc, int er, int ec, String ans, ArrayList<String> res) {
         if (sr == er && sc == ec) {
             res.add(ans);
@@ -383,31 +385,174 @@ public class foundation {
     }
 
     // https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1
+
+    public static ArrayList<String> RatInAMaze(int r, int c, int[][] visit, int[][] dir, String[] dirS) {
+        int n = visit.length, m = visit[0].length;
+
+        if (r == n - 1 && c == m - 1) {
+            ArrayList<String> base = new ArrayList<>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> myAns = new ArrayList<>();
+        visit[r][c] = 0;
+
+        for (int i = 0; i < dir.length; i++) {
+            for (int rad = 1; rad <= Math.max(n, m); rad++) {
+                int row = r + rad * dir[i][0];
+                int col = c + rad * dir[i][1];
+
+                if (row >= 0 && row < n && col >= 0 && col < m && visit[row][col] != 0) {
+                    ArrayList<String> recAns = RatInAMaze(row, col, visit, dir, dirS);
+                    for (String s : recAns) {
+                        myAns.add(dirS[i] + s);
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+
+        visit[r][c] = 1;
+        return myAns;
+    }
+
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        if (m[0][0] == 0) {
+            return new ArrayList<>();
+        }
+
+        int[][] dir = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+        String[] dirS = { "U", "D", "L", "R" };
+        ArrayList<String> ans = RatInAMaze(0, 0, m, dir, dirS);
+        Collections.sort(ans);
+        return ans;
+    }
+
     // https://practice.geeksforgeeks.org/problems/special-matrix4201/1
+    public static int floodFillsm(int sr, int sc, int[][] vis, int[][] dir) {
+        int n = vis.length, m = vis[0].length;
+
+        if (sr == n - 1 && sc == m - 1) {
+
+            return 1;
+        }
+
+        int count = 0;
+        vis[sr][sc] = 1;
+
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < n && c < m && vis[r][c] == 0)
+                count += floodFillsm(r, c, vis, dir);
+
+        }
+
+        vis[sr][sc] = 0;
+        return count;
+    }
+
+    public static int FindWays(int n, int m, int[][] blocked_cells) {
+
+        int[][] vis = new int[m + 1][n + 1];
+        for (int[] bc : blocked_cells) {
+            vis[bc[0]][bc[1]] = 1; // 1 means blocked
+        }
+
+        if (vis[1][1] == 1 || vis[n][m] == 1)
+            return 0;
+
+        int[][] dir = { { 1, 0 }, { 0, 1 } };
+
+        return floodFillsm(1, 1, vis, dir);
+    }
+
     // https://www.geeksforgeeks.org/rat-in-a-maze-with-multiple-steps-jump-allowed/?ref=rp
-    // https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1
+
+    public static class pair {
+        String psf = "";
+        int len = 0;
+
+        pair(String psf, int len) {
+            this.len = len;
+            this.psf = psf;
+        }
+    }
+
+    public static pair longestPath(int sr, int sc, boolean[][] vis, int[][] dir, String[] dirS) {
+        int n = vis.length, m = vis[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            return new pair("", 0);
+        }
+
+        vis[sr][sc] = true; // blocked
+        pair myAns = new pair("", -1);
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < n && c < m) {
+                if (!vis[r][c]) {
+                    pair recAns = longestPath(r, c, vis, dir, dirS);
+                    if (recAns.len != -1 && recAns.len + 1 > myAns.len) {
+                        myAns.len = recAns.len + 1;
+                        myAns.psf = dirS[d] + recAns.psf;
+                    }
+                }
+            }
+        }
+
+        vis[sr][sc] = false; // unblocked
+        return myAns;
+    }
+
+    public static pair shortestPath(int sr, int sc, boolean[][] vis, int[][] dir, String[] dirS) {
+        int n = vis.length, m = vis[0].length;
+        if (sr == n - 1 && sc == m - 1) {
+            return new pair("", 0);
+        }
+
+        vis[sr][sc] = true; // blocked
+        pair myAns = new pair("", (int)1e9);
+        for (int d = 0; d < dir.length; d++) {
+            int r = sr + dir[d][0];
+            int c = sc + dir[d][1];
+
+            if (r >= 0 && c >= 0 && r < n && c < m) {
+                if (!vis[r][c]) {
+                    pair recAns = shortestPath(r, c, vis, dir, dirS);
+                    if (recAns.len != (int)1e9 && recAns.len + 1 < myAns.len) {
+                        myAns.len = recAns.len + 1;
+                        myAns.psf = dirS[d] + recAns.psf;
+                    }
+                }
+            }
+        }
+
+        vis[sr][sc] = false; // unblocked
+        return myAns;
+    }
+
+    public static void longestShortestPath() {
+        int[][] dir = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
+        String[] dirS = { "D", "R", "U", "L" };
+
+        boolean[][] vis = new boolean[3][3];
+        // vis[1][1] = vis[1][2] = vis[2][1] = true;
+
+        pair ans = longestPath(0, 0, vis, dir, dirS);
+        System.out.println(ans.psf + " @ " + ans.len);
+    }
+
 
     // =========================================================================
-
-    public static void mazePath() {
-        int sr = 0, sc = 0, er = 2, ec = 2;
-        ArrayList<String> ans = new ArrayList<>();
-
-        int[][] dir = { { 1, 0 }, { 0, 1 }, { 1, 1 }, { -1, 1 }, };
-        String[] dirS = { "V", "H", "D", "E" };
-
-        // System.out.println(mazePath_HVD_multi(sr, sc, er, ec));
-        // System.out.println(mazePath_HVD_2(sr, sc, er, ec, dir, dirS, ans, ""));
-
-        System.out.println(ans);
-    }
 
     public static void floodFill() {
         int sr = 0, sc = 0, n = 3, m = 3;
         boolean[][] vis = new boolean[n][m];
-        // int[][] dir = { { -1, 0 }, { -1, 1 }, { 0, 1 }, { 1, 1 }, { 1, 0 }, { 1, -1
-        // }, { 0, -1 }, { -1, -1 } };
-        // String[] dirS = { "U", "E", "L", "S", "D", "N", "R", "W" };
 
         int[][] dir = { { 1, 0 }, { 0, 1 }, { 1, 1 } };
         String[] dirS = { "V", "H", "D" };
@@ -440,22 +585,43 @@ public class foundation {
         // int max = maximum(arr, 0);
         // System.out.println(max);
         // System.out.println(find(arr, 0, 7));
-        ArrayList<String> ans = mazepath_HVD(0, 0, 2, 2);
-        System.out.println("single jump return type ==>" + ans);
 
-        ArrayList<String> singleJumpResult = new ArrayList<>();
-        int cnt = mazepath_HVD(0, 0, 2, 2, "", singleJumpResult);
-        System.out.print("single jump void type ==>  " + cnt + "  ==>");
-        System.out.println(singleJumpResult);
-        // multi jump return type
-        ArrayList<String> multiJumpReturn = mazepath_Multi_HVD(0, 0, 2, 2);
-        System.out.println("multi jump return type ==>" + multiJumpReturn);
+        // ArrayList<String> ans = mazepath_HVD(0, 0, 2, 2);
+        // System.out.println("single jump return type ==>" + ans);
 
-        // multi jump void type
-        ArrayList<String> mutliJumpResult = new ArrayList<>();
-        cnt = mazepath_Multi_HVD(0, 0, 2, 2, "", mutliJumpResult);
-        System.out.print("multi jump void type ==>  " + cnt + "  ==>");
-        System.out.println(mutliJumpResult);
+        // ArrayList<String> singleJumpResult = new ArrayList<>();
+        // int cnt = mazepath_HVD(0, 0, 2, 2, "", singleJumpResult);
+        // System.out.print("single jump void type ==> " + cnt + " ==>");
+        // System.out.println(singleJumpResult);
+        // // multi jump return type
+        // ArrayList<String> multiJumpReturn = mazepath_Multi_HVD(0, 0, 2, 2);
+        // System.out.println("multi jump return type ==>" + multiJumpReturn);
+
+        // // multi jump void type
+        // ArrayList<String> mutliJumpResult = new ArrayList<>();
+        // cnt = mazepath_Multi_HVD(0, 0, 2, 2, "", mutliJumpResult);
+        // System.out.print("multi jump void type ==> " + cnt + " ==>");
+        // System.out.println(mutliJumpResult);
+
+        // multiple jumps using vector theory
+        // int sr = 0, sc = 0, er = 2, ec = 2;
+        // ArrayList<String> sol = new ArrayList<>();
+
+        // int[][] dir = { { 1, 0 }, { 0, 1 }, { 1, 1 }, { -1, 1 }, };
+        // String[] dirS = { "V", "H", "D", "E" };
+        // System.out.println(mazePath_HVD_2(sr, sc, er, ec, dir, dirS, sol, ""));
+
+        // System.out.println(sol);
+
+        // floodFill();
+
+        // SPECIAL MATRIX
+
+        // int x = 3 , y =3;
+        // int[][] dir = {{1,2},{3,2}};
+        // System.out.println(FindWays( x , y , dir));
+        
+        longestShortestPath();
     }
 
 }
