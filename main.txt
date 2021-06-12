@@ -1,0 +1,48 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class foundation {
+
+    public static Scanner scn = new Scanner(System.in);
+
+
+    public static void main(String[] args) {
+        // int a = scn.nextInt();
+        // int b = scn.nextInt();
+        // printDec(a , b);
+        // printincDec(a, b);
+        // printinc(a, b);
+        // printEvenOdd(a, b);
+        // System.out.println(factorial(a));
+
+        // input an array
+        // int n = scn.nextInt();
+        // int[] arr = new int[n];
+
+        // for (int i = 0; i < n; i++) {
+        // arr[i] = scn.nextInt();
+        // }
+        // display(arr, 0);
+        // displayReverse(arr, 0);
+        // int max = maximum(arr, 0);
+        // System.out.println(max);
+        // System.out.println(find(arr, 0, 7));
+        ArrayList<String> ans = mazepath_HVD(0, 0, 2, 2);
+        System.out.println("single jump return type ==>" + ans);
+
+        ArrayList<String> singleJumpResult = new ArrayList<>();
+        int cnt = mazepath_HVD(0, 0, 2, 2, "", singleJumpResult);
+        System.out.print("single jump void type ==>  " + cnt + "  ==>");
+        System.out.println(singleJumpResult);
+        // multi jump return type
+        ArrayList<String> multiJumpReturn = mazepath_Multi_HVD(0, 0, 2, 2);
+        System.out.println("multi jump return type ==>" + multiJumpReturn);
+
+        // multi jump void type
+        ArrayList<String> mutliJumpResult = new ArrayList<>();
+        cnt = mazepath_Multi_HVD(0, 0, 2, 2, "", mutliJumpResult);
+        System.out.print("multi jump void type ==>  " + cnt + "  ==>");
+        System.out.println(mutliJumpResult);
+    }
+
+}
