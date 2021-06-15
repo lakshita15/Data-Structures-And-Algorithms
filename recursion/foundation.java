@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+import javax.print.DocFlavor.STRING;
+
 public class foundation {
 
     public static Scanner scn = new Scanner(System.in);
@@ -548,6 +550,26 @@ public class foundation {
     }
 
 
+    public static int permutations(String str, String ans){
+        if(str.length()==0){
+            System.out.println(ans);
+            return 1;
+        }
+
+        int count = 0;
+
+        boolean[]visit = new boolean[26];
+        for(int i=0; i<str.length(); i++){
+            char ch = str.charAt(i);
+            String rest = str.substring(0,i) + str.substring(i+1);
+            if(!visit[ch-'a']){
+                visit[ch-'a'] = true;
+                count+= permutations(rest,ans+ch);
+            }
+        }
+
+        return count;
+    }
     // =========================================================================
 
     public static void floodFill() {
@@ -621,7 +643,9 @@ public class foundation {
         // int[][] dir = {{1,2},{3,2}};
         // System.out.println(FindWays( x , y , dir));
         
-        longestShortestPath();
+        // longestShortestPath();
+
+        System.out.println(permutations("aabc", ""));
     }
 
 }
