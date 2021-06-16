@@ -75,16 +75,31 @@ public class queens {
 
         return count;
     }
+    public static int queenCombination1Dsub(int tnb, int bno, int tnq, int qpsf, String ans) {
+        if (qpsf == tnq ) {
+            System.out.println(ans);
+            return 1;
+        }
+
+        int count = 0;
+        int b = bno;
+        if(b < tnb) {
+            count += queenCombination1Dsub(tnb, bno + 1, tnq, qpsf + 1, ans + "bno" + b + "q" + qpsf + " ");
+            count += queenCombination1Dsub(tnb, bno + 1,tnq,  qpsf, ans);
+        }
+        return count;
+
+    }
     public static void queenCombination() {
-        System.out.println(queenCombination1D(5, 0, 3, 0, ""));
+        System.out.println(queenCombination1D(4, 0, 2, 0, ""));
         // boolean[] tnb = new boolean[5];
         // System.out.println(queenPermutation1D(tnb, 3, 0, ""));
 
 
-        int n = 4;
-        boolean[][] tnb = new boolean[n][n];
-        System.out.println(queenCombination2D(tnb, 0, n, ""));
-        System.out.println(queenPermutation2D(tnb, n, ""));
+        // int n = 4;
+        // boolean[][] tnb = new boolean[n][n];
+        // System.out.println(queenCombination2D(tnb, 0, n, ""));
+        // System.out.println(queenPermutation2D(tnb, n, ""));
 
     }
     public static void main(String[] args) {
