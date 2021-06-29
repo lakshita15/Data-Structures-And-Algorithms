@@ -123,7 +123,7 @@ public class queens {
         int count = 0;
         int n = tnb.length;
         int m = tnb[0].length;
-        int i= bno;
+        int i= tnb;
         int r = i / m;
         int c = i % m;
 
