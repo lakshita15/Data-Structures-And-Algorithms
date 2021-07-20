@@ -37,8 +37,6 @@ public class Sudoku {
         return true;
     }
 
-    
-
     public static boolean solveSudoku(int[][] arr, ArrayList<Integer> emptyIndex, int idx) {
         // base case (when idx = empty index Al size)
         if (idx == emptyIndex.size()) {
@@ -84,5 +82,57 @@ public class Sudoku {
         }
 
         solveSudoku(arr, emptyIndex, 0);
+
+        //isvalid call 
+        char[][] arr2 = {{3, 0, 0, 0, 0, 0, 0, 0, 0},
+        {5, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 8, 7, 0, 0, 0, 0, 3, 1},
+        {0, 0, 3, 0, 1, 0, 0, 8, 0},
+        {9, 0, 0, 8, 6, 3, 0, 0, 5},
+        {0, 5, 0, 0, 9, 0, 6, 0, 0},
+        {1, 3, 0, 0, 0, 0, 2, 5, 0},
+        {0, 0, 0, 0, 0, 0, 0, 7, 4},
+        {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+        System.out.println(isValidSudoku(arr2));
     }
+
+/*******************************************************isvalid**************************************************************** */
+public static  boolean isValidSudoku(char[][] board) { 
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(board[i][j]!='.'){
+                if(isValid2(board,i,j,board[i][j])==false)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+public static boolean isValid2(char arr[][], int r, int c, char num) {
+    for (int i = 0; i < 9; i++) {
+        if (arr[r][i]  == num)
+            return false;
+    }
+
+    // col
+    for (int i = 0; i < 9; i++) {
+        if (arr[i][c]  == num)
+            return false;
+    }
+
+    // mat
+    r = (r / 3) * 3;
+    c = (c / 3) * 3;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (r + i!=i && c+j!=j && arr[r + i][c + j]  == num)
+                return false;
+        }
+    }
+
+    return true;
+}
+
+
 }
